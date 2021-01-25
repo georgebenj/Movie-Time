@@ -27,10 +27,10 @@ CREATE TABLE IF NOT EXISTS channel_list(
 );
 
 
-CREATE TABLE IF NOT EXISTS user_rating(
+CREATE TABLE IF NOT EXISTS user_ratings(
     user_id BIGINT,
     -- media_id VARCHAR(15),
     media_title TEXT,
     rating SMALLINT,
-    PRIMARY KEY (user_id, media_id)
+    PRIMARY KEY (user_id, media_title)
 );
