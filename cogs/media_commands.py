@@ -11,7 +11,7 @@ class MediaCommands(utils.Cog):
         """
 
         # Make sure their rating is valid
-        if 0 >= rating > 5:
+        if rating > 5 or rating <= 0:
             return await ctx.send("Please rate this title from 1 to 5")
 
         # Try and add their rating to the database
