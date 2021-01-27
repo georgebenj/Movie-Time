@@ -1,7 +1,9 @@
+from urllib.parse import urlsplit
+
 import asyncpg
 import voxelbotutils as utils
 
-from cogs.localutils.omdb import get_media_info
+from cogs.localutils.omdb import get_media_info, get_stream_locations
 
 
 class MediaCommands(utils.Cog):
@@ -63,6 +65,25 @@ class MediaCommands(utils.Cog):
         my_embed.set_image(
             url=media_data["Poster"]
         )
+
+        await ctx.send(embed=my_embed)
+
+    @utils.command()
+    async def watchwhere(self, ctx, location:str, *, title:str):
+        """
+        Find out where you can watch a given movie.
+        """
+
+        where_to_watch = get_stream_locations(title, location)
+        urls = where_to_watch['providers']
+        description_lines = [f"[{urlsplit(i).hostname}]({i})" for i in urls]
+
+        myEmbed = utils.Embed(
+            title=where_to_watch['title'],
+            description="\n".join(description_lines),
+        )
+        myEmbed.set_image(url=where_to_watch['poster'])
+        myEmbed.set_footer(text=location)
 
         await ctx.send(embed=myEmbed)
 
