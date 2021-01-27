@@ -1,6 +1,8 @@
 import asyncpg
 import voxelbotutils as utils
 
+from cogs.localutils.omdb import get_media_info
+
 
 class MediaCommands(utils.Cog):
 
@@ -45,8 +47,25 @@ class MediaCommands(utils.Cog):
             )
         return await ctx.send("Rating succesfully updated!")
 
+    @utils.command()
+    async def getPoster(self, ctx, *, title:str):
+
+        media_data = get_media_info(title)
+
+        myEmbed = utils.Embed(
+            title=media_data["Title"],
+            description=media_data["Plot"],
+            use_random_colour=True,
+        )
+        # myEmbed.set_author(name=media_data["Director"])
+        myEmbed.set_footer(text="This is a footer")
+        myEmbed.set_image(
+            url=media_data["Poster"]
+        )
+
+        await ctx.send(embed=myEmbed)
+
 
 def setup(bot:utils.Bot):
     x = MediaCommands(bot)
     bot.add_cog(x)
-
