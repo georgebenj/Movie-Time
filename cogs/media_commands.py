@@ -48,18 +48,19 @@ class MediaCommands(utils.Cog):
         return await ctx.send("Rating succesfully updated!")
 
     @utils.command()
-    async def getPoster(self, ctx, *, title:str):
+    async def poster(self, ctx, *, title:str):
+        """
+        Get the poster for a given movie.
+        """
 
         media_data = get_media_info(title)
 
-        myEmbed = utils.Embed(
+        my_embed = utils.Embed(
             title=media_data["Title"],
             description=media_data["Plot"],
             use_random_colour=True,
         )
-        # myEmbed.set_author(name=media_data["Director"])
-        myEmbed.set_footer(text="This is a footer")
-        myEmbed.set_image(
+        my_embed.set_image(
             url=media_data["Poster"]
         )
 
